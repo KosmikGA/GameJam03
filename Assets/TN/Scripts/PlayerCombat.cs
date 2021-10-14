@@ -8,10 +8,12 @@ public class PlayerCombat : MonoBehaviour
     //public Animator animator;
 
     public Transform attackPoint;
-    public float attackRange = 0.5f;
     public LayerMask enemyLayers;
 
-     void Update()
+    public float attackRange = 0.5f;
+    public int attackDamage = 40;
+
+    void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
@@ -33,6 +35,17 @@ public class PlayerCombat : MonoBehaviour
         foreach (Collider2D enemy in hitEnemies)
         {
             Debug.Log("hit");
+            enemy.GetComponent<EnemyHealth>().TakeDamage(attackDamage);
         }
+    }
+
+
+
+    private void OnDrawGizmosSelected()
+    {
+        if (attackPoint == null)
+            return;
+
+        Gizmos.DrawWireSphere(attackPoint.position, attackRange);
     }
 }

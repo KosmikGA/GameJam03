@@ -4,6 +4,10 @@ using UnityEngine;
 
 public class PlayerMovment : MonoBehaviour
 {
+    public ScoreManager scoreManager;
+    public GameManager manager;
+
+
 
     public float speed = 1f;
     public float jumpForce = 1f;
@@ -73,4 +77,16 @@ void Flip()
         Rotate.x *= -1;
         transform.localScale = Rotate;
     }
+
+
+    //ff you hit a collider tagged with "Coins", destroy coin and play a sound. If any other collider, game fail and play a sound.
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Coins"))
+        {
+            scoreManager.AddPoint();
+            Destroy(other.gameObject);
+        }
+    }
+
 }
